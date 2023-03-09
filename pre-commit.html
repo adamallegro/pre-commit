@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>PRE-COMMIT</h1>
+				<h2>od zera do <strike>bohatera</strike> 0.1</h2>
+			</section>
+			<section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>What are <b>pre-commits</b>?</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>What are <b>pre-commits</b>?</h2>
+					<p>Pre-Commits is a part of bigger concept named <b>Git Hooks</b></p>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>What are <b>pre-commits</b>?</h2>
+					<p>Pre-Commits is a part of bigger concept named <b>Git Hooks</b></p>
+					<p>
+						<b>Git Hooks</b> are events triggered by actions like commit, merge, pull, etc...
+					</p>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Hooks are stored in folder:
+						`.git/hooks`
+
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Hooks are stored in folder:
+						`.git/hooks`
+
+						You can find there the following files:
+						```sh
+						applypatch-msg.sample
+						commit-msg.sample
+						fsmonitor-watchman.sample
+						post-update.sample
+						pre-applypatch.sample
+						pre-commit.sample
+						pre-merge-commit.sample
+						pre-push.sample
+						pre-rebase.sample
+						pre-receive.sample
+						prepare-commit-msg.sample
+						push-to-checkout.sample
+						update.sample
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Hooks are stored in folder:
+						`.git/hooks`
+
+						As you can see there's a lot of it. Each of it can be configured separately and utilized up to your requirements!
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Hooks are stored in folder:
+						`.git/hooks`
+
+						As you can see there's a lot of it. Each of it can be configured separately and utilized up to your requirements!
+
+						Despite it's a big range, we will focus on pre-commits only :)
+					</script>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Let's set a project</h2>
+				</section>
+				<section>
+					But first
+					<h2>Prerequisites</h2>
+					VS Code should have Python Extension Pack installed
+					<img src="img/python_extension_pack.png" alt="">
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					1. Let's setup git repo
+					```sh
+					$ git init
+					```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					1. Let's setup git repo
+						```sh
+						$ git init
+						```
+					2. Let's create conda environment (with this command)
+						```sh
+						$ conda create -n prezka-env python=3.9
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					1. Let's setup git repo
+					2. Let's create conda environment
+						```sh
+						$ conda create -n prezka-env python=3.9
+						```
+					3. Let's create `environment.yml` file
+						```sh
+						$ conda env export > ./environment.yml
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					1. Let's setup git repo
+					2. Let's create conda environment
+					3. Let's create `environment.yml` file
+						We get this:
+						```yaml
+						name: prezka-env
+						channels:
+						  - defaults
+						dependencies:
+						  - ca-certificates=2023.01.10=hecd8cb5_0
+						  - certifi=2022.12.7=py39hecd8cb5_0
+						  - cffi=1.15.1=py39hc55c11b_0
+						   ... And many more ...
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					1. Let's setup git repo
+					2. Let's create conda environment
+					3. Let's create `environment.yml` file
+
+						We can remove dependencies of `python` and `pip` to get this:
+						```yaml
+						name: prezka-env
+						channels:
+						- defaults
+						dependencies:
+						- pip=23.0.1=py39hecd8cb5_0
+						- python=3.9.0=h88f2d9e_2
+						```
+					</script>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Let's install pre-commits</h2>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						We install pre-commits using the following command:
+						```sh
+						conda install pre-commit
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						We install pre-commits using the following command:
+						```sh
+						conda install pre-commit
+						```
+						It is good to remember to add it to the `environment.yml` file:
+						```sh
+						- pre-commit=2.20.0
+						```
+						Next developer will have the same version of pre-commit 
+
+						<small><small>and the same problems</small></small>
+					</script>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Let's setup pre-commits for repo</h2>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Let's create sample configuration file.
+
+						The configuration is stored in `.pre-commit-config.yaml` file.
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Let's create sample configuration file.
+
+						The configuration is stored in `.pre-commit-config.yaml` file.
+
+						We can create it using this command
+						```
+						$ pre-commit smaple-config > .pre-commit-config.yaml
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Let's create sample configuration file.
+						```yaml
+						# See https://pre-commit.com for more information
+						# See https://pre-commit.com/hooks.html for more hooks
+						repos:
+						-   repo: https://github.com/pre-commit/pre-commit-hooks
+							rev: v4.4.0
+							hooks:
+							-   id: trailing-whitespace
+							-   id: end-of-file-fixer
+							-   id: check-yaml
+							-   id: check-added-large-files
+
+						```
+					</script>
+				</section>
+			</section>
+			<section>
+				<section>
+					Paint it <h2>black</h2>
+				</section>
+				<section>
+					<a href="https://github.com/psf/black">BLACK</a> is the uncompromising Python code formatter.
+				</section>
+				<section>
+					To add black to configuration of pre-commits add the following lines to `.pre-commit-config.yaml`:
+				</section>
+				<section>
+					<pre><code class="language-yaml" data-line-numbers="12-17">
+						# See https://pre-commit.com for more information
+						# See https://pre-commit.com/hooks.html for more hooks
+						repos:
+						-   repo: https://github.com/pre-commit/pre-commit-hooks
+							rev: v4.4.0
+							hooks:
+							-   id: trailing-whitespace
+							-   id: end-of-file-fixer
+							-   id: check-yaml
+							-   id: check-added-large-files
+						-   repo: https://github.com/psf/black
+							rev: 22.6.0
+							hooks:
+							- id: black
+							  language_version: python3.9
+						
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						NOTE
+					</h3>
+					It hasn't been added to our conda environment yet!!! It is available in
+					pre-commits only
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					To add black to our environment, let's add this line to environment.yaml file:
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					To add black to our environment, let's add this line to environment.yaml file:
+					<pre>
+						<code class="language-yaml" data-line-numbers="9">
+						name: prezka-env
+						channels:
+						  - defaults
+						dependencies:
+						  - pip=23.0.1=py39hecd8cb5_0
+						  - python=3.9.0=h88f2d9e_2
+						  - pre-commit=2.20.0
+						  - black=22.6.0
+						</code>
+					</pre>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>VS Code and black</h3>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>VS Code and black</h3>
+					Open <b>Settings UI</b> and search for <b>python formatting provider</b>
+					<img src="img/python_formatting_provider.png" alt="">
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>VS Code and black</h3>
+					Good practice is to format on save:
+					<img src="img/format_on_save.png" alt="">
+				</section>
+			</section>
+			<section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>Flake8</h2>
+
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>Flake8</h2>
+
+					<a href="https://flake8.pycqa.org/en/latest/">Flake8</a> is a popular lint wrapper for python. Under
+					the hood, it runs three other tools and combines their results: pep8 for checking style. pyflakes
+					for checking syntax. mccabe for checking complexity.
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>Flake8</h2>
+
+					How to add flake8 to pre-commits?
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<pre><code class="language-yaml" data-line-numbers="17-22">
+						# See https://pre-commit.com for more information
+						# See https://pre-commit.com/hooks.html for more hooks
+						repos:
+						-   repo: https://github.com/pre-commit/pre-commit-hooks
+							rev: v4.4.0
+							hooks:
+							-   id: trailing-whitespace
+							-   id: end-of-file-fixer
+							-   id: check-yaml
+							-   id: check-added-large-files
+						-   repo: https://github.com/psf/black
+							rev: 22.6.0
+							hooks:
+							- id: black
+							language_version: python3.9
+						-   repo: https://github.com/pycqa/flake8
+							rev: 6.0.0
+							hooks:
+							- id: flake8
+					</code></pre>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>
+						NOTE
+					</h3>
+					It hasn't been added to our conda environment yet!!! It is available in
+					pre-commits only
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					It hasn't been added to our conda environment yet!!! It is available in
+					pre-commits only
+					<script type="text/template">
+						To add flake8 to our environment, let's add this line to `environment.yaml` file:
+					</script>
+				</section>
+				<section>
+					<pre>
+						<code class="language-yaml" data-line-numbers="10">
+						name: prezka-env
+						channels:
+						  - defaults
+						dependencies:
+						  - pip=23.0.1=py39hecd8cb5_0
+						  - python=3.9.0=h88f2d9e_2
+						  - pre-commit=2.20.0
+						  - black=22.6.0
+						  - flake8=6.0.0
+						</code>
+					</pre>
+				</section>
+				<section>
+					To enable flake8 in VS Code it is enough to enable it:
+					<img src="img/flake8_vscode.png" alt="">
+				</section>
+			</section>
+			<section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					Hail
+					<h2>MyPy</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					Hail
+					<h2>MyPy</h2>
+					<a href="https://mypy-lang.org/">Mypy</a> is an optional static type checker for Python
+				</section>
+				<section>
+					How to add mypy to pre-commits?
+				</section>
+				<section>
+					<pre><code class="language-yaml" data-line-numbers="21-27">
+						# See https://pre-commit.com for more information
+						# See https://pre-commit.com/hooks.html for more hooks
+						repos:
+						- repo: https://github.com/pre-commit/pre-commit-hooks
+							rev: v4.4.0
+							hooks:
+							- id: trailing-whitespace
+							- id: end-of-file-fixer
+							- id: check-yaml
+							- id: check-added-large-files
+						- repo: https://github.com/psf/black
+							rev: 22.6.0
+							hooks:
+							- id: black
+								language_version: python3.9
+						- repo: https://github.com/pycqa/flake8
+							rev: 6.0.0
+							hooks:
+							- id: flake8
+						- repo: https://github.com/pre-commit/mirrors-mypy
+							rev: v0.981
+							hooks:
+							- id: mypy
+								exclude: ^tests/
+								args: [--strict]
+					</code></pre>
+				</section>
+				<section>
+					You can configure mypy in configuraiton file name mypy.ini located in your project directory:
+
+					<pre><code class="language_yaml">
+						[mypy]
+						python_version = 3.9
+						disallow_any_generics = True
+						disallow_untyped_defs = True
+						warn_return_any = True
+						warn_unused_configs = True
+						strict_optional = True
+						ignore_missing_imports = True
+
+						[mypy-tests.*]
+						ignore_errors = True
+
+					</code></pre>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>
+						NOTE
+					</h3>
+					It hasn't been added to our conda environment yet!!! It is available in
+					pre-commits only
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					It hasn't been added to our conda environment yet!!! It is available in
+					pre-commits only
+					<script type="text/template">
+						To add mypy to our environment, let's add this line to `environment.yaml` file:
+					</script>
+				</section>
+				<section>
+					<pre>
+						<code class="language-yaml" data-line-numbers="11">
+							name: prezka-env
+							channels:
+							  - defaults
+							dependencies:
+							  - pip=23.0.1=py39hecd8cb5_0
+							  - python=3.9.0=h88f2d9e_2
+							  - pre-commit=2.20.0
+							  - black=22.6.0
+							  - flake8=6.0.0
+							  - mypy=0.981
+						</code>
+					</pre>
+				</section>
+				<section>
+					To enable mypy in VS Code it is enough to enable it:
+					<img src="img/mypy_vscode.png" alt="">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>More about pre-commits</h2>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					Let's move back a bit.
+					</script>
+				</section>
+				<section>
+					<pre><code class="language-yaml" data-line-numbers="8-11">
+							# See https://pre-commit.com for more information
+							# See https://pre-commit.com/hooks.html for more hooks
+							repos:
+							-   repo: https://github.com/pre-commit/pre-commit-hooks
+								rev: v4.4.0
+								hooks:
+								-   id: trailing-whitespace
+								-   id: end-of-file-fixer
+								-   id: check-yaml
+								-   id: check-added-large-files
+							-   repo: https://github.com/psf/black
+								rev: 22.6.0
+								hooks:
+								- id: black
+								language_version: python3.9
+							-   repo: https://github.com/pycqa/flake8
+								rev: 6.0.0
+								hooks:
+								- id: flake8
+						</code></pre>
+				</section>
+				<section>
+					These are hooks available "out of the box"
+					You can find much more of them <a href="https://pre-commit.com/hooks.html">here</a>
+				</section>
+				<section>
+					As you might come up earlier, <b>pre-commits</b> can be used with many languages!!!
+					Why?
+					Because
+					<div>
+
+						<ul>
+							<li>trailing-whitespace</li>
+							<li>end-of-file-fixer</li>
+							<li>check-yaml</li>
+							<li>check-added-large-files</li>
+						</ul>
+
+					</div>
+					are important in all the programming languages you use
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						What if you want to run your pre-commits before commit?
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						What if you want to run your pre-commits before commit?
+
+						```sh
+						$ pre-commit run --all-files
+						```
+						 
+						or
+
+						```sh
+						$ pre-commit run --files ./main.py
+						```
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					When there is a reason why you want to commit without running specified check
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+					When there is a reason why you want to commit without running specified check
+
+					```sh
+					$ SKIP=flake8 git commit -m "foo"
+					```
+					</script>
+				</section>
+				<section>
+					If you want to become git hooks ninja go to
+					<a href="https://pre-commit.com/index.html#advanced">Advanced Features</a>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Examples of configuration</h2>
+				</section>
+				<section>
+					<pre><code class="language-yaml" data-line-numbers="6">
+						-   repo: https://gitlab.com/PyCQA/flake8
+							rev: 3.9.2
+							hooks:
+							-   id: flake8
+								args: [--max-line-length=131]
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="language-yaml" data-line-numbers="6">
+						-   repo: https://github.com/pre-commit/mirrors-mypy
+							rev: v0.812
+							hooks:
+							-   id: mypy
+								args: [--junit-xml, test-reports/junit-mypy.xml, --ignore-missing-imports]
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<h2>Pysznej kawusi!</h2>
+				<h3>Udanego weekendu!</h3>
+				<h4>życzy</h4>
+				Adam
+
+			</section>
+		</div>
+
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+		});
+
+	</script>
+
+</body>
+
+</html>
