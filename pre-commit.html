@@ -82,6 +82,16 @@
 						Hooks are stored in folder:
 						`.git/hooks`
 
+						These are just samples, but...
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Hooks are stored in folder:
+						`.git/hooks`
+
+						These are just samples, but...
+
 						As you can see there's a lot of it. Each of it can be configured separately and utilized up to your requirements!
 					</script>
 				</section>
@@ -90,10 +100,36 @@
 						Hooks are stored in folder:
 						`.git/hooks`
 
+						These are just samples, but...
+
 						As you can see there's a lot of it. Each of it can be configured separately and utilized up to your requirements!
 
 						Despite it's a big range, we will focus on pre-commits only :)
 					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						Actions defined in git hooks are run by Python.
+					
+						"Which python?" you may ask.
+					
+						It appears that it's the Virtual Env located in `.env` folder hosted by your project directory
+
+						```sh
+						$ ll -a
+total 9432
+drwxr-xr-x  45 adam.szorcz  staff   1,4K  6 mar 10:23 .
+drwxr-xr-x  50 adam.szorcz  staff   1,6K  6 lut 14:09 ..
+-rw-r--r--   1 adam.szorcz  staff    81B 16 wrz  2021 .dockerignore
+drwxr-xr-x   8 adam.szorcz  staff   256B 11 sie  2021 .env
+drwxr-xr-x  15 adam.szorcz  staff   480B 10 mar 07:36 .git
+drwxr-xr-x   4 adam.szorcz  staff   128B 20 sie  2021 .github
+-rw-r--r--   1 adam.szorcz  staff   1,3K 28 wrz  2021 .gitignore
+drwxr-xr-x   9 adam.szorcz  staff   288B 27 lip  2021 .idea
+...
+						```
+					</script>
+
 				</section>
 			</section>
 			<section>
@@ -163,7 +199,7 @@
 					2. Let's create conda environment
 					3. Let's create `environment.yml` file
 
-						We can remove dependencies of `python` and `pip` to get this:
+						We can (but do not have to) remove dependencies of `python` and `pip` to get this:
 						```yaml
 						name: prezka-env
 						channels:
@@ -172,6 +208,8 @@
 						- pip=23.0.1=py39hecd8cb5_0
 						- python=3.9.0=h88f2d9e_2
 						```
+
+						The rest of the packages will be pulled as dependencies to `python` and `pip`
 					</script>
 				</section>
 			</section>
@@ -200,6 +238,25 @@
 						Next developer will have the same version of pre-commit 
 
 						<small><small>and the same problems</small></small>
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						We install pre-commits using the following command:
+						```sh
+						conda install pre-commit
+						```
+						It is good to remember to add it to the `environment.yml` file:
+						```sh
+						- pre-commit=2.20.0
+						```
+						Next developer will have the same version of pre-commit 
+
+						Finally the verification
+						```sh
+						$ pre-commit -V
+						pre-commit 2.20.0
+						```
 					</script>
 				</section>
 			</section>
@@ -244,6 +301,66 @@
 						```
 					</script>
 				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+						Now it is enough to connect the configuration file with .git repository.
+
+						```sh
+						$ pre-commit install
+						```
+
+						It will create new file in `.git/hooks` folder.
+
+						From now on each change in the configuration file will be *single point of truth* for pre-commits.
+					</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+							Now it is enough to connect the configuration file with .git repository.
+	
+							```sh
+							$ pre-commit install
+							```
+	
+							It will create new file in `.git/hooks` folder.
+	
+							From now on each change in the configuration file will be *single point of truth* for pre-commits.
+						</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+							## Short recap
+	
+							* Pre-Commits - it is a part of Git Hooks concept
+						</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+							## Short recap
+	
+							* Pre-Commits - it is a part of Git Hooks concept
+							* Pre-Commits are checks/actions run right before `git commit` command 
+						</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+							## Short recap
+	
+							* Pre-Commits - it is a part of Git Hooks concept
+							* Pre-Commits are checks/actions run right before `git commit` command 
+							* For that purpose python virtual env is stored
+						</script>
+				</section>
+				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
+					<script type="text/template">
+							## Short recap
+	
+							* Pre-Commits - it is a part of Git Hooks concept
+							* Pre-Commits are checks/actions run right before `git commit` command 
+							* For that purpose python virtual env is stored
+							* `.pre_commit_config.yaml` is a configuraiton file
+						</script>
+				</section>
 			</section>
 			<section>
 				<section>
@@ -279,7 +396,7 @@
 					<h3>
 						NOTE
 					</h3>
-					It hasn't been added to our conda environment yet!!! It is available in
+					It hasn't been added to our conda environment yet!!! It is available in virutal env related to
 					pre-commits only
 				</section>
 				<section data-auto-animate data-auto-animate-unmatched="fade">
@@ -358,7 +475,7 @@
 					<h3>
 						NOTE
 					</h3>
-					It hasn't been added to our conda environment yet!!! It is available in
+					It hasn't been added to our conda environment yet!!! It is available in virutal env related to
 					pre-commits only
 				</section>
 				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
@@ -452,11 +569,11 @@
 					<h3>
 						NOTE
 					</h3>
-					It hasn't been added to our conda environment yet!!! It is available in
+					It hasn't been added to our conda environment yet!!! It is available in virutal env related to
 					pre-commits only
 				</section>
 				<section data-markdown data-auto-animate data-auto-animate-unmatched="fade">
-					It hasn't been added to our conda environment yet!!! It is available in
+					It hasn't been added to our conda environment yet!!! It is available in virutal env related to
 					pre-commits only
 					<script type="text/template">
 						To add mypy to our environment, let's add this line to `environment.yaml` file:
@@ -520,7 +637,7 @@
 					You can find much more of them <a href="https://pre-commit.com/hooks.html">here</a>
 				</section>
 				<section>
-					As you might come up earlier, <b>pre-commits</b> can be used with many languages!!!
+					As you might have noticed earlier, <b>pre-commits</b> can be used with many languages!!!
 					Why?
 					Because
 					<div>
@@ -579,6 +696,8 @@
 					<h2>Examples of configuration</h2>
 				</section>
 				<section>
+					You can change max line length for flake8 and for black:
+
 					<pre><code class="language-yaml" data-line-numbers="6">
 						-   repo: https://gitlab.com/PyCQA/flake8
 							rev: 3.9.2
@@ -588,12 +707,31 @@
 					</code></pre>
 				</section>
 				<section>
+					You can store mypy's result into a file:
+
 					<pre><code class="language-yaml" data-line-numbers="6">
 						-   repo: https://github.com/pre-commit/mirrors-mypy
 							rev: v0.812
 							hooks:
 							-   id: mypy
 								args: [--junit-xml, test-reports/junit-mypy.xml, --ignore-missing-imports]
+					</code></pre>
+				</section>
+				<section>
+					Let's not forget about mypy's own configuration :)
+					<pre><code class="language_yaml">
+						[mypy]
+						python_version = 3.9
+						disallow_any_generics = True
+						disallow_untyped_defs = True
+						warn_return_any = True
+						warn_unused_configs = True
+						strict_optional = True
+						ignore_missing_imports = True
+
+						[mypy-tests.*]
+						ignore_errors = True
+
 					</code></pre>
 				</section>
 			</section>
